@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Activity Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Daily Activity Tracker</h1>
+    </header>
+
+    <div class="container">
+        <!-- Message Box for feedback -->
+        <div id="message-box" class="message-box"></div>
+
+        <div class="main-grid">
+            <!-- Activity Input Form -->
+            <div id="input-section" class="section-card">
+                <h2 id="form-title">Log a New Activity</h2>
+                <form id="activity-form">
+                    <input type="hidden" id="activity-id" value="">
+
+                    <div class="form-group">
+                        <label for="name">Activity Name</label>
+                        <input type="text" id="name" required placeholder="e.g., Coding Session">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="Work">Work</option>
+                            <option value="Personal">Personal</option>
+                            <option value="Health">Health / Fitness</option>
+                            <option value="Learning">Study / Learning</option>
+                            <option value="Leisure">Leisure / Hobby</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="duration">Duration (Minutes)</label>
+                        <input type="number" id="duration" min="1" required placeholder="e.g., 90">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="date-time">Date & Time of Activity</label>
+                        <input type="datetime-local" id="date-time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Notes</label>
+                        <textarea id="notes" rows="3" placeholder="Any details about the activity..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="submit-btn">Add Activity</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-edit-btn" style="display:none;">Cancel Edit</button>
+                </form>
+            </div>
+
+            <!-- Activity Display -->
+            <div id="display-section" class="section-card">
+                <h2>Activity Log</h2>
+                
+                <div class="filter-sort-controls">
+                    <select id="filter-category">
+                        <option value="all">Filter by Category (All)</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Health">Health / Fitness</option>
+                        <option value="Learning">Study / Learning</option>
+                        <option value="Leisure">Leisure / Hobby</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    
+                    <select id="sort-by">
+                        <option value="date-desc">Sort by Date (Newest)</option>
+                        <option value="date-asc">Sort by Date (Oldest)</option>
+                        <option value="duration-desc">Sort by Duration (Longest)</option>
+                        <option value="duration-asc">Sort by Duration (Shortest)</option>
+                    </select>
+                </div>
+
+                <div id="activity-message">
+                    <p style="text-align: center; color: var(--color-text-light);">No activities logged yet.</p>
+                </div>
+
+                <ul id="activity-list">
+                    <!-- Activities will be rendered here -->
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Statistics & Visualization -->
+        <div id="stats-section" class="section-card" style="margin-top: 2rem;">
+            <h2>Daily Summary & Statistics</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-box secondary">
+                    <div class="stat-label">Total Activities Logged</div>
+                    <div class="stat-value" id="stat-count">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Total Time Today</div>
+                    <div class="stat-value" id="stat-time-today">0h 0m</div>
+                </div>
+                <div class="stat-box secondary">
+                    <div class="stat-label">Longest Activity (min)</div>
+                    <div class="stat-value" id="stat-max-duration">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Average Duration (min)</div>
+                    <div class="stat-value" id="stat-avg-duration">0</div>
+                </div>
+            </div>
+
+            <h3>Time Spent by Category (Bar Chart)</h3>
+            <div id="category-chart-container">
+                <canvas id="category-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Data Management -->
+        <div id="data-management-section" class="section-card" style="margin-top: 2rem;">
+            <h2>Data Management</h2>
+            <div class="utility-buttons">
+                <button class="btn btn-secondary" onclick="exportData()">Export Data (JSON)</button>
+                <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">Import Data</button>
+                <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importData(event)">
+                <button class="btn btn-danger" onclick="openConfirmModal('clear')">Clear All Data</button>
+            </div>
+            <textarea id="export-output" rows="5" placeholder="Your exported data will appear here..." style="width: 100%; margin-top: 1rem; display: none;"></textarea>
+        </div>
+    </div>
+    
+    <!-- Modals (Outside main container) -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirm Action</h3>
+            <p id="modal-message">Are you sure you want to proceed?</p>
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                <button class="btn btn-secondary" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn btn-danger" id="confirm-action-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
