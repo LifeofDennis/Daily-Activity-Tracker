@@ -1,0 +1,290 @@
+
+:root {
+  /* Colors */
+  --color-primary: #007bff; /* Blue */
+  --color-primary-dark: #0056b3;
+  --color-text: #333;
+  --color-text-light: #6c757d;
+  --color-background: #f0f2f5;
+  --color-card-bg: #fff;
+  --color-border: #ced4da;
+  --color-error: #dc3545;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Global Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-md);
+  line-height: 1.5;
+}
+
+/* ==================================== */
+/* 2. PAGE & LAYOUT STYLES              */
+/* ==================================== */
+
+.auth-wrap {
+  width: 100%;
+  max-width: 420px; /* Max width for the login card */
+  margin: auto;
+}
+
+.back-link {
+  position: absolute;
+  top: var(--spacing-lg);
+  left: var(--spacing-lg);
+  text-decoration: none;
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--color-primary);
+}
+
+/* ==================================== */
+/* 3. CARD AND HEADER STYLES            */
+/* ==================================== */
+
+.auth-card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.auth-head {
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid #eee;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: var(--color-primary);
+  color: var(--color-card-bg);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  line-height: 1;
+}
+
+#signinTitle {
+  font-size: 1.75rem;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-primary);
+}
+
+.subtitle {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+}
+
+/* ==================================== */
+/* 4. FORM AND FIELD STYLES             */
+/* ==================================== */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Subtle focus ring */
+}
+
+/* Style for fields with an error */
+.field.error input,
+input:invalid:not(:placeholder-shown) {
+    border-color: var(--color-error);
+}
+
+/* ==================================== */
+/* 5. PASSWORD FIELD SPECIFICS          */
+/* ==================================== */
+
+.pw-input-wrap {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.pw-input-wrap input {
+  padding-right: 45px; /* Make space for the toggle button */
+}
+
+.toggle-pw {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  bottom: 1px;
+  padding: 0 var(--spacing-sm);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: background-color 0.1s;
+}
+
+.toggle-pw:hover {
+    background-color: #f8f9fa;
+}
+
+/* ==================================== */
+/* 6. BUTTONS AND MESSAGES              */
+/* ==================================== */
+
+.submit-btn {
+  padding: var(--spacing-md);
+  background-color: var(--color-primary);
+  color: var(--color-card-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  margin-top: var(--spacing-md);
+}
+
+.submit-btn:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.submit-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+.submit-btn:disabled {
+  background-color: var(--color-border);
+  cursor: not-allowed;
+}
+
+.forgot-pw {
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+.forgot-pw a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.forgot-pw a:hover {
+  text-decoration: underline;
+}
+
+.status {
+  font-size: 0.9rem;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  background-color: #e9f0ff;
+  color: var(--color-primary-dark);
+  text-align: center;
+  font-weight: 500;
+  /* Hide when empty */
+  min-height: 1.5em; 
+}
+
+.error {
+  color: var(--color-error);
+  font-size: 0.85rem;
+  margin-top: var(--spacing-xs);
+  /* Hide when empty */
+  min-height: 1.2em; 
+}
+
+/* ==================================== */
+/* 7. RESPONSIVENESS AND SMALL SCREENS  */
+/* ==================================== */
+
+/* Adjust back-link position for smaller screens */
+@media (max-width: 600px) {
+  body {
+    align-items: flex-start; /* Start content from the top */
+    padding-top: 50px;
+    background-color: var(--color-card-bg); /* Use white background on small screens */
+  }
+
+  .auth-wrap {
+    max-width: 100%;
+  }
+
+  .auth-card {
+    box-shadow: none; /* Remove shadow on small screens for a cleaner look */
+    border-radius: 0;
+    padding: var(--spacing-lg);
+  }
+
+  .back-link {
+    top: var(--spacing-sm);
+    left: var(--spacing-sm);
+    z-index: 10;
+  }
+}

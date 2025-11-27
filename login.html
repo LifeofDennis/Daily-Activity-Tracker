@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sign in — Daily Activity Tracker</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <a class="back-link" href="index.html" aria-label="Back to home">← Home</a>
+
+  <main class="auth-wrap" role="main" aria-labelledby="signinTitle">
+    <section class="auth-card">
+      <header class="auth-head">
+        <div class="brand">
+          <span class="logo" aria-hidden="true">DA</span>
+          <div>
+            <h1 id="signinTitle">Welcome back</h1>
+            <p class="subtitle">Sign in to continue to your Daily Activity Tracker</p>
+          </div>
+        </div>
+      </header>
+
+      <div id="status" class="status" aria-live="polite"></div>
+
+      <form id="loginForm" class="form" autocomplete="on" novalidate>
+        <div class="field">
+          <label for="username">Email or username</label>
+          <input id="username" name="username" type="text" inputmode="email" placeholder="you@company.com" required />
+          <div class="error" id="usernameError" aria-live="assertive"></div>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="password-row">
+            <input id="password" name="password" type="password" placeholder="••••••••" minlength="6" required />
+            <button type="button" id="togglePw" class="pw-toggle" aria-label="Show password">👁️</button>
+          </div>
+          <div class="error" id="pwError" aria-live="assertive"></div>
+        </div>
+
+        <div class="form-row between">
+          <label class="remember"><input type="checkbox" id="remember" name="remember" /> Remember me</label>
+          <a class="link" href="forgot.html">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn primary" id="submitBtn">Sign in</button>
+
+        <div class="separator">Or continue with</div>
+
+        <div class="socials">
+          <button type="button" class="btn neutral">GitHub</button>
+          <button type="button" class="btn neutral">Google</button>
+          <button type="button" class="btn neutral">Microsoft</button>
+        </div>
+
+        <p class="signup">New here? <a class="link" href="register.html">Create account</a></p>
+      </form>
+    </section>
+
+    <aside class="promo">
+      <h2>Track progress daily</h2>
+      <p class="muted">Quick summaries, secure syncing and focused dashboards so you can accomplish more.</p>
+      <ul class="features">
+        <li>Smart summaries</li>
+        <li>Multi-device sync</li>
+        <li>Privacy-first design</li>
+      </ul>
+    </aside>
+  </main>
+
+  <script>
+    (function () {
+      const form = document.getElementById('loginForm');
+      const username = document.getElementById('username');
+      const pw = document.getElementById('password');
+      const toggle = document.getElementById('togglePw');
+      const status = document.getElementById('status');
+      const userErr = document.getElementById('usernameError');
+      const pwErr = document.getElementById('pwError');
+      const submitBtn = document.getElementById('submitBtn');
+
+      function clearErrs(){ userErr.textContent=''; pwErr.textContent=''; status.textContent=''; }
+
+      toggle.addEventListener('click', () => {
+        const showing = pw.type === 'text';
+        pw.type = showing ? 'password' : 'text';
+        toggle.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+        toggle.textContent = showing ? '👁️' : '🙈';
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        clearErrs();
+
+        let ok = true;
+        const u = username.value.trim();
+        const p = pw.value;
+
+        if (!u) { userErr.textContent = 'Please enter an email or username.'; ok = false; }
+        if (!p) { pwErr.textContent = 'Password required.'; ok = false; }
+        else if (p.length < 6) { pwErr.textContent = 'Password must be 6+ characters.'; ok = false; }
+
+        if (!ok) return;
+
+        submitBtn.disabled = true;
+        status.textContent = 'Signing in…';
+        setTimeout(() => {
+          status.textContent = 'Signed in — redirecting…';
+          // replace with real submit/redirect
+          setTimeout(() => submitBtn.disabled = false, 800);
+        }, 900);
+      });
+    })();
+  </script>
+</body>
+</html>
